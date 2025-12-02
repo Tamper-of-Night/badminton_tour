@@ -17,7 +17,7 @@ jobs:
     
     steps:
     - name: 下载代码
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       
     - name: 设置Python环境
       uses: actions/setup-python@v4
@@ -31,15 +31,16 @@ jobs:
     - name: 运行Wednesday_1.py
       run: |
         echo "🚀 开始执行Wednesday_1.py"
+        echo "当前时间: $(date)"
         python Wednesday_1.py
         
     - name: 上传结果
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: wednesday-1-results
         path: |
-          auto_fill.log
+          log_Wednesday_1.log  # ⬅️ 重要：匹配你的日志文件名
           *.png
         retention-days: 7
 
@@ -51,7 +52,7 @@ jobs:
     
     steps:
     - name: 下载代码
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       
     - name: 设置Python环境
       uses: actions/setup-python@v4
@@ -65,14 +66,15 @@ jobs:
     - name: 运行Wednesday_2.py
       run: |
         echo "🚀 开始执行Wednesday_2.py"
+        echo "当前时间: $(date)"
         python Wednesday_2.py
         
     - name: 上传结果
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: wednesday-2-results
         path: |
-          auto_fill_task2.log  # 注意：你的Wednesday_2.py可能用不同日志名
+          log_Wednesday_2.log  # ⬅️ 重要：匹配你的日志文件名
           *.png
         retention-days: 7
