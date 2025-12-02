@@ -13,9 +13,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import TimeoutException
 from datetime import datetime
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service as ChromeService
 
 # 配置日志
 logging.basicConfig(
@@ -202,16 +199,12 @@ BACKUP_FIELDS = [1, 2, 6, 7]
 # ========== 主函数 ==========
 
 def auto_fill_form(name, student_id, phone_number, day, time_slot, court):
-    """自动填写表单的主函数"""
     driver = None
     try:
         logging.info("=" * 50)
         logging.info("🚀 开始执行自动填表任务")
-        logging.info(f"📅 时间：{datetime.now()}")
-        logging.info(f"预定信息：{name} - {day} {time_slot} 场地{court}")
-        logging.info("=" * 50)
         
-        # ========== GitHub Actions 专用配置 ==========
+        # ========== 浏览器配置 ==========
         chrome_options = Options()
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
@@ -219,10 +212,7 @@ def auto_fill_form(name, student_id, phone_number, day, time_slot, court):
         chrome_options.add_argument("--disable-gpu")
         chrome_options.add_argument("--window-size=1920,1080")
         chrome_options.add_argument("--lang=zh-CN")
-        
-        # 自动下载和管理 ChromeDriver
-        service = ChromeService(ChromeDriverManager().install())
-        driver = webdriver.Chrome(service=service, options=chrome_options)
+        driver = webdriver.Chrome(options=chrome_options)
         
         logging.info("✅ 启动浏览器成功")
         
