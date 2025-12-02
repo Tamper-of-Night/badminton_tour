@@ -1,0 +1,78 @@
+name: Wednesday Parallel Tasks
+
+on:
+  schedule:
+    # 每周三 UTC 4:00（北京时间周三12:00）执行
+    - cron: '0 4 * * 3'
+  
+  # 允许手动触发测试
+  workflow_dispatch:
+
+jobs:
+  # 任务1：运行Wednesday_1.py
+  task-1:
+    name: "任务1 - Wednesday_1"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+    - name: 下载代码
+      uses: actions/checkout@v3
+      
+    - name: 设置Python环境
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: 安装依赖
+      run: |
+        pip install -r requirements.txt
+        
+    - name: 运行Wednesday_1.py
+      run: |
+        echo "🚀 开始执行Wednesday_1.py"
+        python Wednesday_1.py
+        
+    - name: 上传结果
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: wednesday-1-results
+        path: |
+          auto_fill.log
+          *.png
+        retention-days: 7
+
+  # 任务2：运行Wednesday_2.py
+  task-2:
+    name: "任务2 - Wednesday_2"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+    - name: 下载代码
+      uses: actions/checkout@v3
+      
+    - name: 设置Python环境
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: 安装依赖
+      run: |
+        pip install -r requirements.txt
+        
+    - name: 运行Wednesday_2.py
+      run: |
+        echo "🚀 开始执行Wednesday_2.py"
+        python Wednesday_2.py
+        
+    - name: 上传结果
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: wednesday-2-results
+        path: |
+          auto_fill_task2.log  # 注意：你的Wednesday_2.py可能用不同日志名
+          *.png
+        retention-days: 7
