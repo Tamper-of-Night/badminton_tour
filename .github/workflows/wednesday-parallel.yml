@@ -3,7 +3,7 @@ name: Wednesday Parallel Tasks
 on:
   schedule:
     # 每周三 UTC 4:00（北京时间周三12:00）执行
-    - cron: '30 7 * * 3'
+    - cron: '50 7 * * 3'
   
   # 允许手动触发测试
   workflow_dispatch:
